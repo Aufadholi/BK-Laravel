@@ -14,7 +14,7 @@
                             {{ __('Daftar Jadwal Periksa') }}
                         </h2>
                         <div class="flex-col items-center justify-center text-center">
-                            <a href="{{ route('dokter.jadwalperiksa.create') }}" class="btn btn-primary w-full sm:w-auto">Tambah
+                            <a href="{{ route('dokter.jadwalperiksa.create') }}" class="btn btn-primary w-full sm:w-auto bg-blue-600 hover:bg-blue-700 rounded-full">Tambah
                                 Jadwal</a>
 
                             @if (session('status') === 'jadwalperiksa-created')
@@ -42,7 +42,7 @@
                                 @foreach ($jadwals as $jadwal)
                                     <tr class="align-middle hover:bg-blue-50 transition border-b border-blue-100">
                                         <th scope="row" class="text-center text-gray-700 whitespace-nowrap">{{ $loop->iteration }}</th>
-                                        <td class="text-center font-semibold text-blue-700 whitespace-nowrap">{{ $jadwal->hari }}</td>
+                                        <td class="text-center font-semibold text-black whitespace-nowrap">{{ $jadwal->hari }}</td>
                                         <td class="text-center whitespace-nowrap">{{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}</td>
                                         <td class="text-center whitespace-nowrap">{{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}</td>
                                         <td class="text-center whitespace-nowrap">
