@@ -34,12 +34,15 @@ class JadwalPeriksaController extends Controller
             'hari' => 'required|string|max:20',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
+            'status' => 'required',
         ]);
 
         JadwalPeriksa::create([
+            'id_dokter' => auth()->id(),
             'hari' => $request->hari,
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
+            'status' => $request->status
         ]);
 
         return redirect()->route('dokter.jadwalperiksa.index')->with('status', 'jadwal-created');
@@ -93,5 +96,20 @@ class JadwalPeriksaController extends Controller
         $jadwal->delete();
 
         return redirect()->route('dokter.jadwalperiksa.index')->with('status', 'jadwal-deleted');
+    }
+
+    public function toggleStatus(string $id)
+    {
+        $jadwal = JadwalPeriksa::findOrFail($id);
+        if (!$jadwal->status) {
+            JadwalPeriksa::where('id_dokter', $jadwal->id_dokter)
+                ->where('id', '!=', $jadwal->id)
+                ->update(['status' => false]);
+            $jadwal->status = true;
+        } else {
+            $jadwal->status = false;
+        }
+        $jadwal->save();
+        return redirect()->route('dokter.jadwalperiksa.index')->with('status', 'jadwal-status-updated');
     }
 }
