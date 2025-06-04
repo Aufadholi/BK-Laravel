@@ -8,6 +8,11 @@
     <div class="py-12">
         <div class="mx-auto max-w-2xl sm:px-6 lg:px-8">
             <div class="bg-white p-8 shadow-lg rounded-lg">
+                @if ($errors->has('error'))
+                    <div class="mb-4 p-3 rounded bg-red-100 text-red-700 border border-red-300">
+                        {{ $errors->first('error') }}
+                    </div>
+                @endif
                 <form action="{{ route('dokter.jadwalperiksa.store') }}" method="POST" class="space-y-6">
                     @csrf
                     <div>

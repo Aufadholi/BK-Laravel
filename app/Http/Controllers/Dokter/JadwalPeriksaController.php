@@ -37,6 +37,25 @@ class JadwalPeriksaController extends Controller
             'status' => 'required',
         ]);
 
+        $exists = JadwalPeriksa::where('id_dokter', auth()->id())
+             ->where('hari', $request->hari)
+            ->where(function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('jam_mulai', '<', $request->jam_selesai)
+                        ->where('jam_selesai', '>', $request->jam_mulai);
+                });
+            })
+            ->exists();
+            if ($exists) {
+            return back()->withErrors(['error' => 'Jadwal dengan hari dan jam yang sama sudah ada.']);
+        }
+
+        if($request->status) {
+            JadwalPeriksa::where('id_dokter', auth()->id())
+                ->where('status', true)
+                ->update(['status' => false]);
+        }
+
         JadwalPeriksa::create([
             'id_dokter' => auth()->id(),
             'hari' => $request->hari,
@@ -76,6 +95,21 @@ class JadwalPeriksaController extends Controller
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
         ]);
+
+        // Cek bentrok jadwal selain yang sedang diedit
+        $exists = JadwalPeriksa::where('id_dokter', auth()->id())
+            ->where('hari', $request->hari)
+            ->where('id', '!=', $id)
+            ->where(function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('jam_mulai', '<', $request->jam_selesai)
+                        ->where('jam_selesai', '>', $request->jam_mulai);
+                });
+            })
+            ->exists();
+        if ($exists) {
+            return back()->withErrors(['error' => 'Jadwal dengan hari dan jam yang sama sudah ada.'])->withInput();
+        }
 
         $jadwal = JadwalPeriksa::findOrFail($id);
         $jadwal->update([

@@ -51,13 +51,19 @@
                                                 {{ $jadwal->status ? 'Aktif' : 'Tidak Aktif' }}
                                             </span>
                                         </td>
-                                        <td class="text-center whitespace-nowrap">
+                                        <td class="text-center whitespace-nowrap flex flex-col sm:flex-row items-center gap-2 justify-center">
                                             <form action="{{ route('dokter.jadwal.toggle-status', $jadwal->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm {{ $jadwal->status ? 'btn-outline-secondary' : 'btn-outline-success' }} rounded-pill px-4 py-1 shadow-sm transition-all duration-150 hover:scale-105 w-full sm:w-auto">
                                                     {{ $jadwal->status ? 'Nonaktifkan' : 'Aktifkan' }}
                                                 </button>
+                                            </form>
+                                            <a href="{{ route('dokter.jadwalperiksa.edit', $jadwal->id) }}" class="btn btn-warning btn-sm rounded-pill px-4 py-1 shadow-sm transition-all duration-150 hover:scale-105 w-full sm:w-auto">Edit</a>
+                                            <form action="{{ route('dokter.jadwalperiksa.destroy', $jadwal->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm rounded-pill px-4 py-1 shadow-sm transition-all duration-150 hover:scale-105 w-full sm:w-auto">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
