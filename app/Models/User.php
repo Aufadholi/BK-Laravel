@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // Assuming 'role' is a field to distinguish user roles
+        'role', 
         'alamat',
         'no_ktp',
         'no_hp',
