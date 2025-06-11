@@ -4,7 +4,7 @@
             <div class="flex items-center">
                 <!-- Logo or Brand -->
                 <a href="/" class="flex items-center gap-2">
-                    
+
                     <span class="font-bold text-black text-lg tracking-wide">BK Klinik</span>
                 </a>
                 <!-- Main Nav -->
@@ -28,6 +28,13 @@
                                 <!-- Icon Jadwal: calendar -->
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                                 {{ __('Jadwal Periksa') }}
+                            </span>
+                        </x-nav-link>
+                        <x-nav-link :href="route('dokter.memeriksa.index')" :active="request()->routeIs('dokter.memeriksa.index')" class="text-black">
+                            <span class="inline-flex items-center gap-1">
+                                <!-- Icon Periksa Pasien: stethoscope -->
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 3v6a6 6 0 0012 0V3"/><circle cx="12" cy="17" r="4"/><path d="M12 21v-4"/></svg>
+                                {{ __('Memeriksa Pasien') }}
                             </span>
                         </x-nav-link>
                     @elseif(Auth::user()->role == 'pasien')
@@ -91,6 +98,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('dokter.jadwalperiksa.index')" :active="request()->routeIs('dokter.jadwalperiksa.index')" class="text-black">
                     {{ __('Jadwal Periksa') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('dokter.memeriksa.index')" :active="request()->routeIs('dokter.memeriksa.index')" class="text-black">
+                    {{ __('Memeriksa Pasien') }}
                 </x-responsive-nav-link>
             @elseif(Auth::user()->role == 'pasien')
                 <x-responsive-nav-link :href="route('pasien.dashboard')" :active="request()->routeIs('pasien.dashboard')" class="text-black">

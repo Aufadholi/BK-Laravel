@@ -36,6 +36,8 @@ Route::prefix('janjiperiksa')->group(function(){
     Route::post('/',[JanjiPeriksaController::class,'store'])->name('pasien.janjiperiksa.store');
 });
 
+Route::patch('/dokter/memeriksa/{janji}/toggle-status', [\App\Http\Controllers\Dokter\MemeriksaController::class, 'toggleStatus'])->name('dokter.memeriksa.toggle-status');
+
 
 
 require __DIR__.'/auth.php';
