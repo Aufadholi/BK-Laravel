@@ -34,6 +34,9 @@
                         <x-nav-link :href="route('pasien.dashboard')" :active="request()->routeIs('pasien.dashboard')" class="text-black">
                             {{ __('Dashboard') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('pasien.janjiperiksa.index')" :active="request()->routeIs('pasien.janjiperiksa.index')" class="text-black">
+                            {{ __('Janji Periksa') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -92,6 +95,9 @@
             @elseif(Auth::user()->role == 'pasien')
                 <x-responsive-nav-link :href="route('pasien.dashboard')" :active="request()->routeIs('pasien.dashboard')" class="text-black">
                     {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('pasien.janjiperiksa.index')" :active="request()->routeIs('pasien.janjiperiksa.index')" class="text-black">
+                    {{ __('Janji Periksa') }}
                 </x-responsive-nav-link>
             @endif
         </div>
