@@ -37,6 +37,9 @@ Route::prefix('janjiperiksa')->group(function(){
 });
 
 Route::patch('/dokter/memeriksa/{janji}/toggle-status', [\App\Http\Controllers\Dokter\MemeriksaController::class, 'toggleStatus'])->name('dokter.memeriksa.toggle-status');
+Route::get('/dokter/obat/trash', [\App\Http\Controllers\Dokter\ObatController::class, 'trash'])->name('dokter.obat.trash');
+Route::post('/dokter/obat/{id}/restore', [\App\Http\Controllers\Dokter\ObatController::class, 'restore'])->name('dokter.obat.restore');
+Route::get('/dokter/poli', [\App\Http\Controllers\Dokter\PoliController::class, 'index'])->name('dokter.poli.index');
 
 
 

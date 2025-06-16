@@ -13,12 +13,17 @@
                         <h2 class="text-lg font-medium text-gray-900">
                             {{ __('Daftar Obat') }}
                         </h2>
-                        <div class="flex-col items-center justify-center text-center">
+                        <div class="flex-col items-center justify-center text-center ">
                             <a href="{{ route('dokter.obat.create') }}" class="btn btn-primary w-full sm:w-auto bg-blue-600 hover:bg-blue-700 rounded-full">Tambah Obat</a>
+
+                            {{-- Tambahkan di atas tabel, di bawah tombol "Tambah Obat" --}}
+                            <a href="{{ route('dokter.obat.trash') }}" class="btn btn-primary w-full sm:w-auto bg-red-400 hover:bg-red-500 rounded-full">
+                                Lihat Obat Terhapus
+                            </a>
 
                             @if (session('status') === 'obat-created')
                                 <p
-                                    x-data="{ show: true }" 
+                                    x-data="{ show: true }"
                                     x-show="show"
                                     x-transition
                                     x-init="setTimeout(() => show = false, 2000)"

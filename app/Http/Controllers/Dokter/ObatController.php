@@ -10,9 +10,8 @@ class ObatController extends Controller
     public function index()
     {
         $obats = Obat::all();
-        return view('dokter.obat.index')->with([
-            'obats' => $obats,
-        ]);
+        $obatsTrashed = Obat::onlyTrashed()->get();
+        return view('dokter.obat.index', compact('obats', 'obatsTrashed'));
     }
 
     public function create()
@@ -63,11 +62,25 @@ class ObatController extends Controller
         return redirect()->route('dokter.obat.index')->with('status', 'obat-updated');
     }
 
+    // Soft delete obat
     public function destroy($id)
     {
-        $obat = Obat::find($id);
+        $obat = Obat::findOrFail($id);
         $obat->delete();
+        return redirect()->back()->with('status', 'Obat berhasil dihapus (soft delete).');
+    }
 
-        return redirect()->route('dokter.obat.index');
+    // Restore obat yang terhapus
+    public function restore($id)
+    {
+        $obat = \App\Models\Obat::withTrashed()->findOrFail($id);
+        $obat->restore();
+        return redirect()->route('dokter.obat.trash')->with('status', 'Obat berhasil direstore.');
+    }
+
+    public function trash()
+    {
+        $obatsTrashed = \App\Models\Obat::onlyTrashed()->get();
+        return view('dokter.obat.trash', compact('obatsTrashed'));
     }
 }

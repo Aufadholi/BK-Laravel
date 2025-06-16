@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Poli;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PeriksaSeeder::class,
             DetailPeriksaSeeder::class,
             DokterSeeder::class,
+            PoliSeeder::class,
         ]);
         // User::factory(10)->create();
 
