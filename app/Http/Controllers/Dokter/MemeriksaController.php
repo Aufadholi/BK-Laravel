@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dokter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JanjiPeriksa;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Obat;
 
@@ -12,9 +13,9 @@ class MemeriksaController extends Controller
 {
     public function index()
     {
-        $janjis = JanjiPeriksa::with(['pasien', 'jadwalPeriksa'])
+        $janjis = JanjiPeriksa::with(['pasien', 'jadwalPeriksa.dokter'])
             ->whereHas('jadwalPeriksa', function ($query) {
-                $query->where('id_dokter', auth()->id());
+                $query->where('id_dokter', Auth::id());
             })
             ->whereDoesntHave('periksa')
             ->get();
@@ -52,6 +53,14 @@ class MemeriksaController extends Controller
             'catatan' => $validated['catatan'],
             'biaya_periksa' => $total_biaya,
         ]);
+        if (!empty($validated['obat_ids'])) {
+        foreach ($validated['obat_ids'] as $obat_id) {
+            \App\Models\DetailPeriksa::create([
+                'id_periksa' => $periksa->id,
+                'id_obat' => $obat_id,
+            ]);
+        }
+    }
 
         return redirect()->route('dokter.memeriksa.index')->with('status', 'Pemeriksaan berhasil dibuat.');
     }

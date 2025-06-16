@@ -37,7 +37,7 @@
                                     <td class="align-middle text-start">
                                         {{ $janjiPeriksa->jadwalPeriksa->dokter->poli }}</td>
                                     <td class="align-middle text-start">
-                                        {{ $janjiPeriksa->jadwalPeriksa->dokter->nama }}</td>
+                                        {{ $janjiPeriksa->jadwalPeriksa->dokter->name }}</td>
                                     <td class="align-middle text-start">{{ $janjiPeriksa->jadwalPeriksa->hari }}</td>
                                     <td class="align-middle text-start">
                                         {{ \Carbon\Carbon::parse($janjiPeriksa->jadwalPeriksa->jam_mulai)->format('H.i') }}
@@ -47,14 +47,14 @@
                                     </td>
                                     <td class="align-middle text-start">{{ $janjiPeriksa->no_antrian }}</td>
                                     <td class="align-middle text-start">
-                                        @if (is_null($janjiPeriksa->periksa))
+                                        @if ($janjiPeriksa->periksa->isEmpty())
                                             <span class="badge badge-pill badge-warning">Belum Diperiksa</span>
                                         @else
                                             <span class="badge badge-pill badge-success">Sudah Diperiksa</span>
                                         @endif
                                     </td>
                                     <td class="align-middle text-start">
-                                        @if (is_null($janjiPeriksa->periksa))
+                                        @if ($janjiPeriksa->periksa->isEmpty())
                                             <a href="{{route('pasien.riwayat-periksa.detail', $janjiPeriksa->id)}}" class="btn btn-info">Detail</a>
 
                                             <!-- Modal -->
@@ -85,7 +85,7 @@
                                                                 </li>
                                                                 <li class="list-group-item">
                                                                     <strong>Nama Dokter:</strong>
-                                                                    {{ $janjiPeriksa->jadwalPeriksa->dokter->nama }}
+                                                                    {{ $janjiPeriksa->jadwalPeriksa->dokter->name }}
                                                                 </li>
                                                                 <li class="list-group-item">
                                                                     <strong>Hari Pemeriksaan:</strong>
