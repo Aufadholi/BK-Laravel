@@ -54,17 +54,7 @@
                                 {{ __('Memeriksa Pasien') }}
                             </span>
                         </x-nav-link>
-                        <x-nav-link :href="route('dokter.poli.index')" :active="request()->routeIs('dokter.poli.index')" class="text-black">
-                            <span class="inline-flex items-center gap-1">
-                                <!-- Icon Poli: hospital -->
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <path d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                                {{ __('Poli') }}
-                            </span>
-                        </x-nav-link>
+
                     @elseif(Auth::user()->role == 'pasien')
                         <x-nav-link :href="route('pasien.dashboard')" :active="request()->routeIs('pasien.dashboard')" class="text-black">
                             {{ __('Dashboard') }}
@@ -144,9 +134,7 @@
                 <x-responsive-nav-link :href="route('dokter.memeriksa.index')" :active="request()->routeIs('dokter.memeriksa.index')" class="text-black">
                     {{ __('Memeriksa Pasien') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('dokter.poli.index')" :active="request()->routeIs('dokter.poli.index')" class="text-black">
-                    {{ __('Poli') }}
-                </x-responsive-nav-link>
+               
             @elseif(Auth::user()->role == 'pasien')
                 <x-responsive-nav-link :href="route('pasien.dashboard')" :active="request()->routeIs('pasien.dashboard')" class="text-black">
                     {{ __('Dashboard') }}
