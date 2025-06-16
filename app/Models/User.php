@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -21,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', 
+        'role',
         'alamat',
         'no_ktp',
         'no_hp',
@@ -36,6 +37,11 @@ class User extends Authenticatable
     public function janjiPeriksas()
     {
         return $this->hasMany(JanjiPeriksa::class, 'id_pasien');
+    }
+
+    public function poli()
+    {
+        return $this->belongsTo(Poli::class, 'id_poli');
     }
 
     /**

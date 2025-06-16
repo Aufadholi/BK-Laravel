@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PeriksaSeeder::class,
             DetailPeriksaSeeder::class,
             DokterSeeder::class,
+            PoliSeeder::class,
         ]);
         // User::factory(10)->create();
 
