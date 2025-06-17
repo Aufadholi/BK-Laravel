@@ -22,18 +22,20 @@
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
-        <div>
-            <x-input-label for="id_poli" :value="__('Poli')" />
-            <select class="form-control" name="id_poli" id="id_poli">
-                <option value="">Pilih Poli</option>
-                @foreach ($poli as $item)
-                    <option value="{{ $item->id }}" {{ old('id_poli', $user->id_poli) == $item->id ? 'selected' : '' }}>
-                        {{ $item->nama_poli }}
-                    </option>
-                @endforeach
-            </select>
-            <x-input-error class="mt-2" :messages="$errors->get('id_poli')" />
-        </div>
+        @if ($user->role === 'dokter')
+    <div>
+        <x-input-label for="id_poli" :value="__('Poli')" />
+        <select class="form-control" name="id_poli" id="id_poli">
+            <option value="">Pilih Poli</option>
+            @foreach ($poli as $item)
+                <option value="{{ $item->id }}" {{ old('id_poli', $user->id_poli) == $item->id ? 'selected' : '' }}>
+                    {{ $item->nama_poli }}
+                </option>
+            @endforeach
+        </select>
+        <x-input-error class="mt-2" :messages="$errors->get('id_poli')" />
+    </div>
+@endif
 
         <div>
             <x-input-label for="email" :value="__('Email')" />

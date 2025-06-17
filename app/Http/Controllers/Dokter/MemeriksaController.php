@@ -49,7 +49,7 @@ class MemeriksaController extends Controller
 
         $periksa = \App\Models\Periksa::create([
             'id_janji_periksa' => $validated['id_janji_periksa'],
-            'tgl_periksa' => $validated['tgl_periksa'],
+            'tgl_periksa' => $validated['tgl_periksa'] . ' ' . now()->format('H:i:s'),
             'catatan' => $validated['catatan'],
             'biaya_periksa' => $total_biaya,
         ]);
