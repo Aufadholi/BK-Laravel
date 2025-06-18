@@ -31,7 +31,7 @@
                                 <label for="dokterSelect">Dokter</label>
                                 <select class="form-control" id="dokterSelect" name="id_jadwal_periksa" required>
                                     <option>Pilih Dokter</option>
-                                    @foreach ($dokter as $dokter)
+                                    @foreach ($dokters as $dokter)
                                         @foreach ($dokter->jadwalPeriksas as $jadwal)
                                             <option value={{ $jadwal->id }}>
                                                 {{ $dokter->name}} - Spesialis {{ $dokter->poli->nama_poli ?? 'unknown' }} | {{ $jadwal->hari }} - {{ $jadwal->jam_mulai }} - {{ $jadwal->jam_selesai }}
