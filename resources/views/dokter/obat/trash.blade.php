@@ -36,6 +36,12 @@
                                                     Restore
                                                 </button>
                                             </form>
+                                            <form action="{{ route('dokter.obat.forceDelete', $obat->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm rounded-pill px-4 py-1 shadow-sm bg-red-500 hover:bg-red-700 rounded-full">
+                                                    Delete Permanent
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty

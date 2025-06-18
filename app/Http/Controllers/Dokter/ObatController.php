@@ -83,4 +83,12 @@ class ObatController extends Controller
         $obatsTrashed = \App\Models\Obat::onlyTrashed()->get();
         return view('dokter.obat.trash', compact('obatsTrashed'));
     }
+
+    public function forceDelete($id)
+    {
+        $obat = Obat::onlyTrashed()->findOrFail($id);
+        $obat->forceDelete();
+
+        return redirect()->back()->with('success', 'Obat dihapus secara permanen.');
+    }
 }
