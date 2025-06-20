@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('obats', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_obat', 50);
-            $table->string('kemasan', 35);
-            $table->string('harga');
-            $table->timestamps();
-
+        Schema::table('obats', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -26,7 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-            Schema::dropIfExists('obats');
-
+        Schema::table('obats', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

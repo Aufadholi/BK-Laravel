@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'no_ktp' => '1234567890123456',
                 'no_hp' => '081234567890',
                 'no_rm' => 'RM123456',
-                'poli' => 'Umum',
+
             ],
             [
                 'name' => 'Emanuel Smith',
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
                 'no_ktp' => '9087761890981725',
                 'no_hp' => '081234567899',
                 'no_rm' => 'RM123091',
-                'poli' => null,
+
             ],
         ];
         foreach ($users as $user) {

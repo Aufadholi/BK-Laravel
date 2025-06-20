@@ -4,6 +4,7 @@
             {{ __('Daftar Pasien Menunggu Diperiksa') }}
         </h2>
     </x-slot>
+
     <div class="py-12">
         <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
             <div class="bg-white p-6 shadow rounded-lg">
@@ -26,17 +27,26 @@
                                 <td class="text-center">{{ $janji->pasien->name ?? '-' }}</td>
                                 <td class="text-center">{{ $janji->JadwalPeriksa->hari ?? '-' }}</td>
                                 <td class="text-center">
-                                    {{$janji->JadwalPeriksa->jam_mulai}} - {{$janji->JadwalPeriksa->jam_selesai}}
+                                    {{ $janji->JadwalPeriksa->jam_mulai }} - {{ $janji->JadwalPeriksa->jam_selesai }}
                                 </td>
                                 <td class="text-center">{{ $janji->keluhan }}</td>
                                 <td class="text-center">{{ $janji->no_antrian }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('dokter.memeriksa.create', $janji->id) }}" class="btn btn-primary btn-sm rounded-pill">Periksa</a>
+                                    @if ($janji->periksa)
+                                        <span class="inline-block px-3 py-1 text-sm text-white bg-green-500 rounded-full">
+                                            Sudah Diperiksa
+                                        </span>
+                                    @else
+                                        <a href="{{ route('dokter.memeriksa.create', $janji->id) }}"
+                                           class="btn btn-primary btn-sm rounded-pill bg-blue-600 hover:bg-blue-700 text-white px-4 py-1">
+                                            Periksa
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-3">Belum ada janji periksa.</td>
+                                <td colspan="7" class="text-center text-muted py-3">Belum ada janji periksa.</td>
                             </tr>
                         @endforelse
                     </tbody>

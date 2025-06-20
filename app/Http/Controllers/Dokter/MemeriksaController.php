@@ -12,15 +12,26 @@ use App\Models\Obat;
 class MemeriksaController extends Controller
 {
     public function index()
-    {
-        $janjis = JanjiPeriksa::with(['pasien', 'jadwalPeriksa.dokter'])
-            ->whereHas('jadwalPeriksa', function ($query) {
-                $query->where('id_dokter', Auth::id());
-            })
-            ->whereDoesntHave('periksa')
-            ->get();
-        return view('dokter.memeriksa.index', compact('janjis'));
-    }
+{
+    $janjis = JanjiPeriksa::with([
+            'pasien',
+            'jadwalPeriksa.dokter',
+            'periksa'
+        ])
+        ->whereHas('jadwalPeriksa', function ($query) {
+            $query->where('id_dokter', Auth::id());
+        })
+        ->get()
+        ->sortBy(function($item){
+            return $item->periksa ? 1 : 0;
+        });
+
+        // ->orderBy('created_at', 'desc')
+        // ->get();
+
+    return view('dokter.memeriksa.index', compact('janjis'));
+}
+
 
     public function create(JanjiPeriksa $janji)
     {
@@ -63,5 +74,47 @@ class MemeriksaController extends Controller
     }
 
         return redirect()->route('dokter.memeriksa.index')->with('status', 'Pemeriksaan berhasil dibuat.');
+    }
+
+    public function edit($periksa)
+    {
+        $periksa = \App\Models\Periksa::with(['janjiPeriksa.pasien', 'janjiPeriksa.jadwalPeriksa', 'detailPeriksas.obat'])->findOrFail($periksa);
+        $obats = Obat::all();
+        $selectedObatIds = $periksa->detailPeriksas->pluck('id_obat')->toArray();
+        $janji = $periksa->janjiPeriksa;
+        return view('dokter.memeriksa.edit', compact('periksa', 'janji', 'obats', 'selectedObatIds'));
+    }
+
+    public function update(Request $request, $periksa)
+    {
+        $validated = $request->validate([
+            'tgl_periksa' => 'required|date',
+            'catatan' => 'required|string',
+            'obat_ids' => 'nullable|array',
+            'obat_ids.*' => 'exists:obats,id',
+        ]);
+        $periksa = \App\Models\Periksa::findOrFail($periksa);
+        $biaya_pemeriksaan = 100000;
+        $total_harga_obat = 0;
+        if (!empty($validated['obat_ids'])) {
+            $total_harga_obat = \App\Models\Obat::whereIn('id', $validated['obat_ids'])->sum('harga');
+        }
+        $total_biaya = $biaya_pemeriksaan + $total_harga_obat;
+        $periksa->update([
+            'tgl_periksa' => $validated['tgl_periksa'] . ' ' . now()->format('H:i:s'),
+            'catatan' => $validated['catatan'],
+            'biaya_periksa' => $total_biaya,
+        ]);
+        // Update detail periksa
+        $periksa->detailPeriksas()->delete();
+        if (!empty($validated['obat_ids'])) {
+            foreach ($validated['obat_ids'] as $obat_id) {
+                \App\Models\DetailPeriksa::create([
+                    'id_periksa' => $periksa->id,
+                    'id_obat' => $obat_id,
+                ]);
+            }
+        }
+        return redirect()->route('dokter.memeriksa.index')->with('status', 'Pemeriksaan berhasil diupdate.');
     }
 }
