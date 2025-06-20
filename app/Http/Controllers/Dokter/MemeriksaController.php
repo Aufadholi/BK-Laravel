@@ -26,8 +26,7 @@ class MemeriksaController extends Controller
             return $item->periksa ? 1 : 0;
         });
 
-        // ->orderBy('created_at', 'desc')
-        // ->get();
+
 
     return view('dokter.memeriksa.index', compact('janjis'));
 }
